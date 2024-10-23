@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTO</title>
+    <link href="./output.css" rel="stylesheet">
+    <style>
+        /* Keyframe animation for the text */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-up {
+            animation: fadeInUp 1.5s ease-in-out forwards;
+        }
+    </style>
+    <script async defer src="https://apis.google.com/js/api.js"></script>
+    <script src="index.js" defer></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-500 text-white p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Collaborative Task Organizer</h1>
+        <div class="space-x-4">
+            <!-- Use the existing styles for buttons -->
+            <button id="signinButton" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                Sign In
+            </button>
+            <button id="signupButton" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                Sign Up
+            </button>
+        </div>
+    </nav>
+    <div class="flex flex-col md:flex-row items-center p-8 md:p-16">
+        <div class="text-center md:text-left md:w-1/2 space-y-8">
+            <h2 class="text-6xl font-bold text-gray-800 animate-fade-up">
+                Stay Organized
+            </h2>
+            <h2 class="text-6xl font-bold text-gray-800 animate-fade-up" style="animation-delay: 0s;">
+                Stay Focused
+            </h2>
+        </div>
+        <div class="mt-8 md:mt-0 md:w-1/2 flex justify-end">
+            <img src="image/googlecal.png" class="rounded-lg shadow-lg w-[50%] h-[50%]">
+        </div>
+    </div>
+</body>
+</html>
