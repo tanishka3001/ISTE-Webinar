@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTO</title>
+    <link href="./output.css" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-500 text-white p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Collaborative Task Organizer</h1>
+    </nav>
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md">
+        <div class="bg-blue-600 text-white text-center font-bold text-lg p-4 rounded-t-lg">
+            Create Event
+        </div>
+        <div class="p-5">
+            <form id="eventForm">
+                <div class="mb-4">
+                    <label for="eventName" class="block text-gray-700">Event Name:</label>
+                    <input type="text" id="eventName" name="eventName" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Enter event name">
+                </div>
+                <div class="mb-4">
+                    <label for="eventDate" class="block text-gray-700">Event Date:</label>
+                    <input type="date" id="eventDate" name="eventDate" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div class="mb-4">
+                    <label for="eventTime" class="block text-gray-700">Event Time:</label>
+                    <input type="time" id="eventTime" name="eventTime" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                </div>
+                <div class="mb-4">
+                    <label for="priority" class="block text-gray-700">Priority:</label>
+                    <select id="priority" name="priority" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                        <option value="" disabled selected>Select priority</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-green-600 text-white font-bold py-2 px-4 rounded-md w-full hover:bg-green-700">Add Event</button>
+            </form>
+        </div>
+    </div>       
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

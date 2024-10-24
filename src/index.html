@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTO</title>
     <link href="./output.css" rel="stylesheet">
+    
     <style>
         /* Keyframe animation for the text */
         @keyframes fadeInUp {
@@ -21,19 +22,15 @@
             animation: fadeInUp 1.5s ease-in-out forwards;
         }
     </style>
-    <script async defer src="https://apis.google.com/js/api.js"></script>
-    <script src="index.js" defer></script>
+    
 </head>
 <body class="bg-gray-100">
     <nav class="bg-blue-500 text-white p-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold">Collaborative Task Organizer</h1>
         <div class="space-x-4">
             <!-- Use the existing styles for buttons -->
-            <button id="signinButton" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+            <button id="signInButton" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
                 Sign In
-            </button>
-            <button id="signupButton" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                Sign Up
             </button>
         </div>
     </nav>
@@ -50,5 +47,8 @@
             <img src="image/googlecal.png" class="rounded-lg shadow-lg w-[50%] h-[50%]">
         </div>
     </div>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="index.js" defer></script> 
 </body>
 </html>
