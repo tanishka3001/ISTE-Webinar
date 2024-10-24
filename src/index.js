@@ -1,12 +1,16 @@
 const CLIENT_ID = '792557354550-dqq1ir0vtjp5nl35em70ec8fs19kddrl.apps.googleusercontent.com'; // Replace with your actual client ID
-const API_KEY = 'AIzaSyBDyIrGF0aaQHC3K-3XPmQcScdojmJ_ayc';      // Replace with your actual API key
+const API_KEY = 'AIzaSyBDyIrGF0aaQHC3K-3XPmQcScdojmJ_ayc'; // Replace with your actual API key
 const DISCOVERY_DOCS = [
     "https://sheets.googleapis.com/$discovery/rest?version=v4",
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
 ];
-const SCOPES = "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/spreadsheets";
+const SCOPES = "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email";
 
 let accessToken = null; // Initialize accessToken to null
+
+// Spreadsheet ID and Range to store data
+const SPREADSHEET_ID = '1SiqdehCoaZKKhTcNfeGl7jDxqu-EZMa24ybpfraCXK0'; // Replace with your actual Spreadsheet ID
+const RANGE = 'Sheet1!A:A'; // Modify if you need to change the target sheet or range
 
 // Load the Google API client
 function initClient() {
@@ -35,7 +39,7 @@ function signInWithOAuth() {
     window.location.href = authUrl; // Redirect to Google's OAuth 2.0 server
 }
 
-// Function to handle token retrieval
+// Function to handle token retrieval and store user info
 function handleTokenResponse() {
     const hash = window.location.hash;
     if (hash) {
@@ -44,18 +48,61 @@ function handleTokenResponse() {
         
         if (accessToken) {
             console.log('Access Token:', accessToken);
-            // Check if gapi.client is initialized before setting the token
-            if (gapi.client) {
-                gapi.client.setToken({ access_token: accessToken });
-                // Redirect to the form page after successful sign-in
-                window.location.href = 'http://127.0.0.1:5500/src/form.html'; // Replace with the actual form page URL
-            } else {
-                console.error('gapi.client is not initialized.');
-            }
+            gapi.client.setToken({ access_token: accessToken });
+            fetchUserEmail(); // Fetch user email after successful sign-in
         } else {
             console.error('Failed to retrieve access token from URL hash.');
         }
     }
+}
+
+// Function to fetch user info and store it in the spreadsheet
+function fetchUserEmail() {
+    gapi.client.request({
+        path: 'https://www.googleapis.com/oauth2/v3/userinfo'
+    }).then(response => {
+        const userEmail = response.result.email;
+        console.log('User Email:', userEmail);
+        if (userEmail) {
+            storeInSpreadsheet(userEmail); // Store email in the spreadsheet
+        } else {
+            console.error('Failed to retrieve user email.');
+        }
+        window.location.href = 'http://127.0.0.1:5500/src/form.html'; // Redirect to form page
+    }).catch(error => {
+        console.error('Failed to fetch user email:', error);
+    });
+}
+
+// Function to store user info in Google Spreadsheet
+function storeInSpreadsheet(userEmail) {
+    const params = {
+        spreadsheetId: SPREADSHEET_ID,
+        range: RANGE,
+        valueInputOption: 'USER_ENTERED'
+    };
+
+    const valueRangeBody = {
+        majorDimension: "ROWS",
+        values: [
+            [userEmail, new Date().toLocaleString()] // Append email and current timestamp
+        ]
+    };
+
+    // Log to verify parameters
+    console.log('Storing data to spreadsheet with params:', params);
+    console.log('Value to append:', valueRangeBody);
+
+    // Make the API request to append data
+    gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody).then((response) => {
+        if (response.status === 200) {
+            console.log('User info stored successfully:', response);
+        } else {
+            console.error('Failed to store user info:', response);
+        }
+    }).catch((error) => {
+        console.error('Error storing data:', error);
+    });
 }
 
 // Load the API client and initialize sign-in on page load
